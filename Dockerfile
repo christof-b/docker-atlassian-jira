@@ -3,15 +3,15 @@ FROM openjdk:8-alpine
 # Configuration variables.
 ENV JIRA_HOME     /var/atlassian/jira
 ENV JIRA_INSTALL  /opt/atlassian/jira
-ENV JIRA_VERSION  7.13.0
+ENV JIRA_VERSION  7.13.1
 
 ENV TZ			  CET-2CEDT-2
 
 # Install Atlassian JIRA and helper tools and setup initial home
 # directory structure.
 RUN set -x \
-	&& echo ${TZ} > /etc/TZ \
-	&& apk update \
+    && echo ${TZ} > /etc/TZ \
+    && apk update \
     && apk add --no-cache curl xmlstarlet bash ttf-dejavu libc6-compat apr-util apr-dev openssl openssl-dev gcc musl-dev make \
     && mkdir -p                "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_HOME}/caches/indexes" \
@@ -32,7 +32,7 @@ RUN set -x \
 # on systems where multiple processes end up being executed by 'daemon' but
 # here we only ever run one process anyway.
 RUN set -x \
-	&& adduser -D -G root -g "ROS User" rosuser \
+    && adduser -D -G root -g "ROS User" rosuser \
     && chmod -R 770           "${JIRA_HOME}" \
     && chown -R rosuser:root  "${JIRA_HOME}" \
     && chmod -R 770            "${JIRA_INSTALL}/conf" \
